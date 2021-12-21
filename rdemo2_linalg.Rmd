@@ -1,0 +1,47 @@
+---
+title: "rdemo2_linalg"
+author: "Akhil Havaldar"
+date: "12/21/2021"
+output: html_document
+---
+
+library("pracma")
+
+## Matrix Arithmetic
+
+A <- matrix(c(1,3,2,4,2,-1,0,3,5),nrow=3,byrow=T) 
+A
+
+B <- matrix(c(7,-3,2,0,4,5,2,-1,-4),nrow=3,byrow=T) 
+B
+
+# Addition
+A + B
+
+# Subtraction
+B - A
+
+# Multiplication
+A %*% B 
+B %*% A  # Matrix multiplication is not commutative!
+
+## Transpose
+A
+t(A)
+
+## Matrix Inverse
+
+entries <- c(1,-2,1,
+             -3,7,-6,
+             2,-3,0)
+A <- matrix(entries,nrow=3,byrow=T)
+A
+
+# The function "inv" will calculate the inverse.
+
+inv(A)
+
+# Check the result
+A %*% inv(A)
+round(A %*% inv(A))  # Fix the round-off error
+

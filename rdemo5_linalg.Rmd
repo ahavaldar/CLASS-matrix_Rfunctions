@@ -1,0 +1,63 @@
+---
+title: "rdemo5_linalg"
+author: "Akhil Havaldar"
+date: "12/21/2021"
+output: html_document
+---
+#
+# Approximations and Diagonalization
+#
+# The code below implements the power method
+# to find dominant eigenvalue and corresponding
+# eigenvector, when they exist.
+
+# We will define our own function to determine
+# the scaling factor, which will be used to scale 
+# the eigenvector and to approximate the eigenvalue.
+
+scalingfactor <- function(v) {
+  if (abs(max(v)) >= abs(min(v))) {
+    return(max(v))
+  } else {
+    return(min(v))
+  }
+}
+
+# Now we are ready to look for eigenpairs!
+# Start with a matrix and an initial approximation
+# for an eigenvector.
+m <- matrix(c(3,-1,2,3,-1,6,-2,2,-2), nrow=3, byrow=TRUE) # sample matrix
+m
+
+x <- c(1,1,1)  # The initial vector
+
+# The loop below will compute and print successive
+# approximations.
+for (i in 1:20){  
+  s <- scalingfactor(m %*% x)
+  x <- (m %*% x)/s
+  print(c("Approx Eigenvalue: ",s))
+  print(c("Approx Eigenvector:",x))   
+}
+
+# Let's check the result.
+eigen(m)
+
+eigen(m)$values[1]  # Gives dominant eigenvalue
+eigen(m)$vectors[,1]/scalingfactor(eigen(m)$vectors[,1])
+        # Gives corresponding scaled eigenvector
+
+
+## Diagonalizing a matrix
+
+# The output from "eigen" does most of the work of diagonalizing.
+# We have
+
+P = eigen(m)$vectors  # define P, columns of eigenvectors
+P
+
+D = diag(eigen(m)$values)  # define D, diagonal entries of eigenvalues
+D
+
+P %*% D %*% solve(P)
+m

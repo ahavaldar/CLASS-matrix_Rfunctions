@@ -1,0 +1,43 @@
+---
+title: "rdemo4_linalg"
+author: "Akhil Havaldar"
+date: "12/21/2021"
+output: html_document
+---
+
+library("pracma")
+
+## Rank and Nullity
+
+# Define matrix again used earlier
+entries = c(0,0,6,0,19,11,-27,
+             3,12,9,-6,26,31,-63,
+             1,4,3,-2,10,9,-17,
+             -1,-4,-4,2,-13,-11,22)
+m <- matrix(entries,nrow=4,byrow=T)
+m
+
+ncol(m) # The number of columns of m
+Rank(m)   # The rank of m
+nullspace(m) # Basis for null space, given as matrix
+ncol(nullspace(m)) # The nullity
+
+## The Determinant
+
+# A 5-by-5 matrix
+
+entries <- c(1,1,2,-5,0,
+             4,4,-5,2,-8,
+             0,2,-1,0,6,
+             3,-1,1,4,5,
+             5,3,2,-4,7)
+A <- matrix(entries,nrow=5,byrow=T)
+A
+
+det(A)  # The determinant
+
+## Eigenvalues and Eigenvectors
+
+m <- matrix(c(0,1,1,1,0,1,1,1,0), nrow=3, byrow=TRUE) # sample matrix
+m
+eigen(m)  # The eigenvalues and eigenvectors

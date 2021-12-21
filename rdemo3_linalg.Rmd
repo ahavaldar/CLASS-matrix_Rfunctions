@@ -1,0 +1,39 @@
+---
+title: "rdemo3_linalg"
+author: "Akhil Havaldar"
+date: "12/21/2021"
+output: html_document
+---
+
+library("pracma")
+
+## LU Factorization
+
+entries <- c(-3,1,2,
+             6,2,-5,
+             9,5,-6)
+A <- matrix(entries,nrow=3,byrow=T)
+A
+
+# The function "lu" will compute the LU factorization.
+
+lu(A)
+
+## Markov Chain
+
+A <- matrix(c(.65, .2, .35, .8),nrow=2,byrow=T)
+A
+x <- c(1,0)  # initial state vector
+x
+
+for (i in 1:10) { # start with 10 iterations
+  x <- A %*% x
+  print(x)
+}
+
+x <- c(1,0) # reset initial state vector
+for (i in 1:20) { # 20 iterations
+  x <- A %*% x
+  print(x)
+}
+

@@ -1,0 +1,115 @@
+---
+title: "rdemo1"
+output: html_document
+---
+
+library(pracma)
+
+entries <- c(1,-1,-1,1,-3,4,   # This is a list of the entries
+             2,-2,-2,1,-4,5,   # in the augmented matrix.  They
+             1,0,1,1,-2,3,     # are split across rows to make
+             -2,0,-2,2,0,2)    # it easier to read.
+
+m <- matrix(entries,nrow=4,byrow=T) 
+
+m
+
+## Special Case: A Square System
+
+# In the case of a system with the same number of equations
+# and variables (a "square system") that has a unique solution,
+# the R function "solve" will provide the solution.
+
+# We start with a matrix the includes *only* the coefficients
+# from the left side of the system:
+
+entries <- c(1,2,-3,
+             3,6,-8,
+             -2,-1,0)
+a <- matrix(entries,nrow=3,byrow=T) #Define the coefficient matrix a
+a
+
+# We then define a list of the constant terms from the right side of
+# the system:
+
+b <- c(11,32,-7)
+b
+
+# Finally, we put those into "solve":
+solve(a,b)  # Output given as a list, in order x1, x2, x3.
+
+## Using Jacobi iteration
+
+
+# Use Jacobi iteration to solve the system:
+#
+#    5*x1 -  2*x2 = 13
+#      x1 - 10*x2 = -7
+#
+# Start by solving for x1, x2:
+#      
+#      x1 = (13 + 2*x2)/5
+#      x2 = (-7 - x1)/(-10)
+
+x1curr <- 0   # Set initial guess for x1=0
+x2curr <- 0   # Set initial guess for x2=0
+
+for (n in 1:10) {
+  x1new <- (13 + 2*x2curr)/5  # Compute new value for x1
+  x2new <- (-7 - x1curr)/(-10) # Compute new value for x2
+  print(c(x1new, x2new))  # Print out new values
+  x1curr <- x1new # Transfer new to current to compute next x1
+  x2curr <- x2new # Transfer new to current to compute next x2
+}
+
+# A system of 3 equations and 3 variables.
+
+# -2*x1        +    x3 =  5
+#   -x1 + 5*x2 -    x3 =  8
+#  2*x1 - 6*x2 + 10*x3 = 16
+
+# Solving for x1, x2, x3:
+#
+#  x1 = (5 - x3)/(-2)
+#  x2 = (8 + x1 + x3)/5
+#  x3 = (16 - 2*x1 + 6*x2)/10
+
+# Start by initializing variables
+x1curr <- 0   # Set initial guess for x1=0
+x2curr <- 0   # Set initial guess for x2=0
+x3curr <- 0   # Set initial guess for x3=0
+
+for (n in 1:10) {
+  x1new <- (5 - x3curr)/(-2)  # Compute new value for x1
+  x2new <- (8 + x1curr + x3curr)/5  # Compute new value for x2
+  x3new <- (16 - 2*x1curr + 6*x2curr)/10  # Compute new value for x3
+  print(c(x1new, x2new, x3new))  # Print out new values
+  x1curr <- x1new # Transfer new to current to compute next x1
+  x2curr <- x2new # Transfer new to current to compute next x2
+  x3curr <- x3new # Transfer new to current to compute next x3
+}
+
+## Using Gauss-Seidel iteration
+
+# The only difference between Jacobi and Gauss-Seidel
+# is in when the variable values are updated.  The
+# code for Gauss-Seidel is actually simpler, because
+# the updating happens immediately.
+
+# Below is code for Gauss-Seidel.
+
+x2 <- 0   # Set initial guess for x2=0 
+x3 <- 0   # Set initial guess for x3=0 
+# (No need to guess for x1.)
+
+# The first 10 iterations
+
+for (n in 1:10) {
+  x1 <- (5 - x3)/(-2)  # Compute new value for x1
+  x2 <- (8 + x1 + x3)/5  # Compute new value for x2
+  x3 <- (16 - 2*x1 + 6*x2)/10  # Compute new value for x3
+  print(c(x1, x2, x3))  # Print out new values
+}
+
+
+
